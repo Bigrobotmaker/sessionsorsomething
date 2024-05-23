@@ -52,7 +52,22 @@ def register():
 def login():
     form = loginform()
     if form.is_submitted():
-        pass
+        username = form.username.data
+        password = form.password.data
+        user_info = users.get(username,None)
+        if user_info is not None and user_info.password == password:
+            print("login successful.")
+            session[username] = username
+            return redirect(url_for("welcome"))
+        else:
+            print("login failed.")
+            return render_template("login.html",form=form)
     else:
-        print("Access code incorect")
         return render_template("login.html", form=form)
+@app.route("/")
+def welcome():
+    username = session.get("username",None)
+    if username is not None:
+        return render_template("welcome.html", realname = users[username].realname)
+    else:
+        return redirect(url_for("login"))
