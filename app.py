@@ -63,7 +63,7 @@ def login():
         if user_info is not None and user_info.password == password:
             print("login successful.")
             session[username] = username
-            return redirect(url_for("welcome"))
+            return redirect(url_for("welcome.html"))
         else:
             print("login failed.")
             return render_template("login.html",form=form)
