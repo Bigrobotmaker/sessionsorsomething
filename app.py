@@ -34,10 +34,14 @@ def register():
         password = form.password.data
         password2 = form.password2.data
         accesscode = form.accesscode.data
+        print(realname)
+        print(username)
         if accesscode == ACCESS_CODE and password == password2:
             print("Access code correct, regestering user.")
             new_user = User(realname, username, password)
             users[username] = new_user
+            print(realname)
+            print(username)
             return redirect(url_for("login"))
         else:
             print(accesscode)
