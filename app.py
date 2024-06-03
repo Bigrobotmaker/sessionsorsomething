@@ -62,8 +62,8 @@ def login():
         user_info = users.get(username,None)
         if user_info is not None and user_info.password == password:
             print("login successful.")
-            session[username] = username
-            return redirect(url_for("welcome.html"))
+            session['username'] = username
+            return redirect(url_for("welcome"))
         else:
             print("login failed.")
             return render_template("login.html",form=form)
@@ -76,3 +76,7 @@ def welcome():
         return render_template("welcome.html", realname = users[username].realname)
     else:
         return redirect(url_for("login"))
+@app.route("/logout")
+def logout():
+    del session["username"]
+    return redirect(url_for("login"))
