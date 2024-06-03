@@ -56,6 +56,7 @@ def register():
 def login():
     form = loginform()
     if form.is_submitted():
+        print('check')
         username = form.username.data
         password = form.password.data
         user_info = users.get(username,None)
