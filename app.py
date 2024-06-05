@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-
 app = Flask(__name__)
 app.secret_key = "giantpotato"
 
@@ -25,6 +24,8 @@ class RegisterForm(FlaskForm):
     password2 = PasswordField("password2")
     accesscode = PasswordField("accesscode")
     submit = SubmitField("register")
+class welcomeform(FlaskForm):
+    submit = SubmitField("logout")
 @app.route("/register", methods=["GET","POST"])
 def register():
     form = RegisterForm()
@@ -56,7 +57,6 @@ def register():
 def login():
     form = loginform()
     if form.is_submitted():
-        print('check')
         username = form.username.data
         password = form.password.data
         user_info = users.get(username,None)
@@ -73,10 +73,12 @@ def login():
 def welcome():
     username = session.get("username",None)
     if username is not None:
-        return render_template("welcome.html", realname = users[username].realname)
+        return render_template("welcome.html")
     else:
         return redirect(url_for("login"))
 @app.route("/logout")
 def logout():
-    del session["username"]
-    return redirect(url_for("login"))
+    form = welcomeform()
+    if form.is_submitted():
+        del session["username"]
+        return redirect(url_for("login"))
