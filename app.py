@@ -73,7 +73,7 @@ def login():
 def welcome():
     username = session.get("username",None)
     if username is not None:
-        return render_template("welcome.html")
+        return render_template("welcome.html", realname = users[username].realname)
     else:
         return redirect(url_for("login"))
 @app.route("/logout")
