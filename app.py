@@ -69,7 +69,7 @@ def login():
             return render_template("login.html",form=form)
     else:
         return render_template("login.html", form=form)
-@app.route("/")
+@app.route("/", methods=["GET","POST"])
 def welcome():
     username = session.get("username",None)
     if username is not None:
