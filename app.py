@@ -76,7 +76,7 @@ def welcome():
         return render_template("welcome.html", realname = users[username].realname)
     else:
         return redirect(url_for("login"))
-@app.route("/logout")
+@app.route("/logout", methods=["GET","POST"])
 def logout():
     form = welcomeform()
     if form.is_submitted():
